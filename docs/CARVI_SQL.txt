@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016 年 5 朁E26 日 03:59
+-- Generation Time: 2016 年 5 月 26 日 03:59
 -- サーバのバージョン： 5.6.21
 -- PHP Version: 5.6.3
 
