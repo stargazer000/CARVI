@@ -1,0 +1,78 @@
+﻿-- phpMyAdmin SQL Dump
+-- version 4.2.11
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: 2016 年 5 朁E26 日 03:59
+-- サーバのバージョン： 5.6.21
+-- PHP Version: 5.6.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `carvi`
+--
+CREATE DATABASE IF NOT EXISTS `carvi` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `carvi`;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `media`
+--
+
+DROP TABLE IF EXISTS `media`;
+CREATE TABLE IF NOT EXISTS `media` (
+`id` int(11) NOT NULL,
+  `content` varchar(200) NOT NULL,
+  `datetime` date NOT NULL,
+  `minetype` varchar(200) NOT NULL,
+  `attributes` varchar(200) NOT NULL,
+  `outkine_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `outline`
+--
+
+DROP TABLE IF EXISTS `outline`;
+CREATE TABLE IF NOT EXISTS `outline` (
+`id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `body` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `media`
+--
+ALTER TABLE `media`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `outline`
+--
+ALTER TABLE `outline`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `media`
+--
+ALTER TABLE `media`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `outline`
+--
+ALTER TABLE `outline`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
