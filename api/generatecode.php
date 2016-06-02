@@ -1,14 +1,12 @@
 <?php
-//コードを発行する
-//発行したコードをセットする変数 $code
+$shard_id = 7777;
+$insert_id = 1;
+$seq = $insert_id % 1024;
+$offset = time();
+$instagram_millisec =(int) ((microtime(TRUE) - $offset) * 1000);
 
-//JOSNデータをセットする変数 $json_data
-$json_data = null;
+$id =$instagram_millisec * 8388608 + $shard_id * 1024 + $seq;
 
-//画像ファイルの保存パスをセットする変数 $file_path
-$file_path = "";
-
-$code = "";
-
-
-var_dump($code);
+echo "Instagram ID:\n";
+echo $id . "\n";
+?>
