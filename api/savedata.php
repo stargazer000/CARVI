@@ -22,12 +22,12 @@ $file_path = "images/aaaaaa.jpg";
 $code = "aaa00001";
 
 //データベースに保存する
-$id = $_GET['id'];
-$context = $_GET['context'];
-$datetime = $_GET['datetime'];
-$minetype = $_GET['minetype'];
-$attreibutes = $_GET['attreibutes'];
-$outkine_id = $_GET['outkine_id'];
+$id = $json_data->{'id'};
+$context = $json_data->{'context'};
+$datetime = $json_data->{'datetime'};
+$minetype = $json_data->{'minetype'};
+$attreibutes = $json_data->{'attreibutes'};
+$outkine_id = $json_data->{'outkine_id'};
 
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=carvi;charset=utf8', 'dummy_user', 'dummy_pass');
