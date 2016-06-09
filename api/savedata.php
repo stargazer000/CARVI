@@ -22,15 +22,19 @@ $file_path = "images/aaaaaa.jpg";
 $code = "aaa00001";
 
 //データベースに保存する
-$id = $json_data->{'id'};
+$date = $json_data->{'sent_at'};
+$title = $json_data->{'title'};
+$body = $json_data->{'body'};
+/*
 $context = $json_data->{'context'};
 $datetime = $json_data->{'datetime'};
 $minetype = $json_data->{'minetype'};
 $attreibutes = $json_data->{'attreibutes'};
 $outkine_id = $json_data->{'outkine_id'};
+*/
 
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=carvi;charset=utf8', 'dummy_user', 'dummy_pass');
+    $pdo = new PDO('mysql:host=localhost;dbname=carvi;charset=utf8', 'sample', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 } catch (PDOException $Exception) {
@@ -40,30 +44,39 @@ try {
 try {
     $pdo->beginTransaction();
     $sql = <<<EOS
-INSERT INTO media (id,content,datetime,minetype,attrebutes,outkine_id)
-VALUES (:id,:content,:datetime,:minetype,:attrebutes,:outkine_id)
+            
+INSERT INTO outline (date,title,body)
+VALUES (:date,:title,:body)
 EOS;
     $stmh = $pdo->prepare($sql);
-    $stmh->bindValue(':id', $_POST['id']);
+    $stmh->bindValue(':date', $date);
+    $stmh->bindValue(':title', $title);
+    $stmh->bindValue(':body', $body);
+    
+    $stmh->execute();
+    $pdo->commit();
+    
+/*
+
+    $pdo->beginTransaction();
+    $sql = <<<EOS
+            
+INSERT INTO media (content,datetime,minetype,attrebutes,outkine_id)
+VALUES (:content,:datetime,:minetype,:attrebutes,:outkine_id)
+EOS;
+    $stmh = $pdo->prepare($sql);
     $stmh->bindValue(':content', $_POST['content']);
     $stmh->bindValue(':datetime', $_POST['datetime']);
     $stmh->bindValue(':minetype', $_POST['minetype']);
     $stmh->bindValue(':attreibutes', $_POST['attreibutes']);
     $stmh->bindValue(':outkine_id', $_POST['outkine_id']);
+
     $stmh->execute();
     $pdo->commit();
-
+*/
     $pdo = null;
 } catch (PDOException $Exception) {
     $pdo->rollBack();
     print "error:" . $Exception->getMessage();
 }
 ?>
-//JOSNデータをセットする変数 $json_data
-$json_data = null;
-
-//画像ファイルの保存パスをセットする変数 $file_path
-$file_path = "";
-
-//発行したコードをセットする変数 $code
-$code = "";
