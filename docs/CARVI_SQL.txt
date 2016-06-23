@@ -1,4 +1,4 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
@@ -19,60 +19,38 @@ USE `carvi`;
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `media`
+-- テーブルの構造 `outline`
 --
 
-DROP TABLE IF EXISTS `media`;
-CREATE TABLE IF NOT EXISTS `media` (
-`id` int(11) NOT NULL,
-  `content` varchar(200) NOT NULL,
-  `datetime` date NOT NULL,
-  `minetype` varchar(200) NOT NULL,
-  `attributes` varchar(200) NOT NULL,
-  `outkine_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- DROP TABLE IF EXISTS `outline`;
+CREATE TABLE IF NOT EXISTS `outline` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'アウトラインID',
+  `code` VARCHAR(200) NOT NULL COMMENT 'コード',
+  `title` VARCHAR(200) NOT NULL COMMENT 'タイトル',
+  `body` MEDIUMTEXT NULL COMMENT '説明文',
+  `sent_at` DATETIME NOT NULL COMMENT '送信日時',
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `code_UNIQUE` (`code` ASC))
+ENGINE = InnoDB;
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `outline`
+-- テーブルの構造 `media`
 --
 
-DROP TABLE IF EXISTS `outline`;
-CREATE TABLE IF NOT EXISTS `outline` (
-`id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `body` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `media`
---
-ALTER TABLE `media`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `outline`
---
-ALTER TABLE `outline`
- ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `media`
---
-ALTER TABLE `media`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `outline`
---
-ALTER TABLE `outline`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+-- DROP TABLE IF EXISTS `media`;
+CREATE TABLE IF NOT EXISTS `media` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'メディアID',
+  `minetype` VARCHAR(45) NOT NULL COMMENT 'ファイルの種類',
+  `filepath` VARCHAR(200) NOT NULL COMMENT 'ファイルの保存パス',
+  `attributes` MEDIUMTEXT NULL COMMENT '属性 オブジェクトをシリアライズして格納する',
+  `outline_id` INT NOT NULL COMMENT 'アウトラインID',
+  PRIMARY KEY (`id`),
+  INDEX `fk_outline_id_idx` (`outline_id` ASC),
+  CONSTRAINT `fk_outline_id`
+    FOREIGN KEY (`outline_id`)
+    REFERENCES `outline` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
