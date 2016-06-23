@@ -25,13 +25,11 @@ $code = "aaa00001";
 $date = $json_data->{'sent_at'};
 $title = $json_data->{'title'};
 $body = $json_data->{'body'};
-/*
-$context = $json_data->{'context'};
-$datetime = $json_data->{'datetime'};
-$minetype = $json_data->{'minetype'};
-$attreibutes = $json_data->{'attreibutes'};
-$outkine_id = $json_data->{'outkine_id'};
-*/
+
+$attachments = $json_data->{'attachments'};
+$minetype = $attachments[0]->{'minetype'};
+$attributes = $attachments[0]->{'attributes'};
+
 
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=carvi;charset=utf8', 'sample', '');
@@ -52,29 +50,31 @@ EOS;
     $stmh->bindValue(':date', $date);
     $stmh->bindValue(':title', $title);
     $stmh->bindValue(':body', $body);
+   
     
     $stmh->execute();
-    $pdo->commit();
+    $outline_id = $pdo->lastInsertId();
+   
     
-/*
-
-    $pdo->beginTransaction();
     $sql = <<<EOS
-            
-INSERT INTO media (content,datetime,minetype,attrebutes,outkine_id)
-VALUES (:content,:datetime,:minetype,:attrebutes,:outkine_id)
+    
+    
+INSERT INTO media (minetype,attributes,outline_id)
+VALUES (:minetype,:attributes,:outline_id)
 EOS;
+    
+    
     $stmh = $pdo->prepare($sql);
-    $stmh->bindValue(':content', $_POST['content']);
-    $stmh->bindValue(':datetime', $_POST['datetime']);
-    $stmh->bindValue(':minetype', $_POST['minetype']);
-    $stmh->bindValue(':attreibutes', $_POST['attreibutes']);
-    $stmh->bindValue(':outkine_id', $_POST['outkine_id']);
-
+    $stmh->bindValue(':minetype', $minetype);
+    $stmh->bindValue(':attributes', serialize($attributes));
+    
+    $stmh->bindValue(':outline_id', $outline_id);
+    
     $stmh->execute();
     $pdo->commit();
-*/
+    
     $pdo = null;
+    
 } catch (PDOException $Exception) {
     $pdo->rollBack();
     print "error:" . $Exception->getMessage();
