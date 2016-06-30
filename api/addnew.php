@@ -33,3 +33,13 @@ include 'savedata.php';
 
 
 //JOSNデータをレスポンスで返す
+
+// JSON形式のテキストを生成する
+$json = <<< JSON_DOC
+    {"code":"$code"}
+JSON_DOC;
+ 
+// JSON用のヘッダを定義して出力
+header("Content-Type: text/javascript; charset=utf-8");
+echo $json;
+exit();
