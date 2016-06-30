@@ -3,7 +3,7 @@
 //画像ファイルの保存パスをセットする変数 $file_path
 
 //JOSNデータをセットする変数 $json_data
-$json_string = '{'
+/*$json_string = '{'
         . '"sent_at" : "2016-05-26 11:05:05",'
         . '"title" : "タイトルですよ",'
         . '"body" : "説明文です。改行を含む場合はエスケープする必要があります。",'
@@ -16,7 +16,7 @@ $json_string = '{'
         . ']'
         . '}';
 
-$json_data = json_decode($json_string);
+$json_data = json_decode($json_string); */
 
 $json_attachments = $json_data->{'attachments'};
 $json_minetype = $json_attachments[0]->{'minetype'};
@@ -30,11 +30,11 @@ $i = 0;
 while($i==0){
     //ここで乱数からmd5を作成しフォルダ名を決定する。
     $rand = mt_rand();
-    echo $rand . "\n";
+    // echo $rand . "\n";
     $md5 = md5($rand);
     //フォルダ名が$folderに入る
     $folder = substr($md5, 0, 10);
-    echo $folder;
+    // echo $folder;
     
     //暫定的に自分のピクチャーフォルダを設定
     $file_path = "C:\\Users\\kouhei\\Pictures\\" . $folder . "." . $extension;
@@ -48,12 +48,9 @@ while($i==0){
         //開いて書き込む
         fwrite($fp, $content);
         //echo部分は実装時に削除
-        echo "出力成功";
+        //echo "出力成功";
         $i =1;
     }
 }
-
-var_dump($file_path);
-
 //TODO
 //拡張子のバリエーションに対応する

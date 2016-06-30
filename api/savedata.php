@@ -1,6 +1,6 @@
 <?php
 //JOSNデータをセットする変数 $json_data
-$json_string = '{'
+/*$json_string = '{'
         . '"sent_at" : "2016-05-26 11:05:05",'
         . '"title" : "タイトルですよ",'
         . '"body" : "説明文です。改行を含む場合はエスケープする必要があります。",'
@@ -19,10 +19,9 @@ $json_data = json_decode($json_string);
 $file_path = "images/aaaaaa.jpg";
 
 //発行したコードをセットする変数 $code
-$code = "aaa00001";
-
+$code = "aaa00001"; */
 //データベースに保存する
-$date = $json_data->{'sent_at'};
+$sent_at= $json_data->{'sent_at'};
 $title = $json_data->{'title'};
 $body = $json_data->{'body'};
 
@@ -32,7 +31,7 @@ $attributes = $attachments[0]->{'attributes'};
 
 
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=carvi;charset=utf8', 'sample', '');
+    $pdo = new PDO('mysql:host=localhost;dbname=carvi;charset=utf8', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 } catch (PDOException $Exception) {
@@ -43,13 +42,14 @@ try {
     $pdo->beginTransaction();
     $sql = <<<EOS
             
-INSERT INTO outline (date,title,body)
-VALUES (:date,:title,:body)
+INSERT INTO outline (sent_at,title,body,code)
+VALUES (:sent_at,:title,:body,:code)
 EOS;
     $stmh = $pdo->prepare($sql);
-    $stmh->bindValue(':date', $date);
+    $stmh->bindValue(':sent_at', $sent_at);
     $stmh->bindValue(':title', $title);
     $stmh->bindValue(':body', $body);
+    $stmh->bindValue(':code', $code);
    
     
     $stmh->execute();
@@ -59,16 +59,16 @@ EOS;
     $sql = <<<EOS
     
     
-INSERT INTO media (minetype,attributes,outline_id)
-VALUES (:minetype,:attributes,:outline_id)
+INSERT INTO media (minetype,attributes,outline_id,filepath)
+VALUES (:minetype,:attributes,:outline_id,:filepath)
 EOS;
     
     
     $stmh = $pdo->prepare($sql);
     $stmh->bindValue(':minetype', $minetype);
     $stmh->bindValue(':attributes', serialize($attributes));
-    
     $stmh->bindValue(':outline_id', $outline_id);
+    $stmh->bindValue(':filepath', $file_path);
     
     $stmh->execute();
     $pdo->commit();
@@ -79,4 +79,3 @@ EOS;
     $pdo->rollBack();
     print "error:" . $Exception->getMessage();
 }
-?>

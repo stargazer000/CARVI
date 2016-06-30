@@ -5,8 +5,4 @@ $seq = $insert_id % 1024;
 $offset = time();
 $instagram_millisec =(int) ((microtime(TRUE) - $offset) * 1000);
 
-$id =$instagram_millisec * 8388608 + $shard_id * 1024 + $seq;
-
-echo "Instagram ID:\n";
-echo $id . "\n";
-?>
+$code =$instagram_millisec * 8388608 + $shard_id * 1024 + $seq;
