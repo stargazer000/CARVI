@@ -1,0 +1,12 @@
+{ 
+    "title": "タイトルですよ",
+    "body": "説明文です。改行も含まれます", 
+    "sent_at": "2016-05-26 11:05:05",
+    "media": [
+        {
+            "attributes": {}, 
+            "url": "http://localhost/media/aaaa.jpg", 
+            "minetype": "image/jpeg"
+        }
+    ]
+}
