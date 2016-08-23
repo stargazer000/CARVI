@@ -37,7 +37,7 @@ while($i==0){
     // echo $folder;
     
     //暫定的に自分のピクチャーフォルダを設定
-    $file_path = "C:\\Users\\kouhei\\Pictures\\" . $folder . "." . $extension;
+    $file_path = "./imgs/" . $folder . "." . $extension;
 
     //ファイル名のダブりを確認
     if(!file_exists($file_path)){
