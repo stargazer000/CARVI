@@ -33,11 +33,11 @@ while($i==0){
     // echo $rand . "\n";
     $md5 = md5($rand);
     //フォルダ名が$folderに入る
-    $folder = substr($md5, 0, 10);
+    $fname = substr($md5, 0, 10);
     // echo $folder;
     
     //暫定的に自分のピクチャーフォルダを設定
-    $file_path = "./imgs/" . $folder . "." . $extension;
+    $file_path = dirname(__FILE__) ."/imgs/" . $fname . "." . $extension;
 
     //ファイル名のダブりを確認
     if(!file_exists($file_path)){
